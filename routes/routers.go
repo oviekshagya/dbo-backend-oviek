@@ -8,7 +8,6 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/requestid"
 	"github.com/gin-gonic/gin"
-
 )
 
 var (
@@ -42,6 +41,15 @@ func Setup() {
 	customerAuth.Use(middleware.AuthorizeBaererJWT(), middleware.AuthHeader())
 	{
 		customerAuth.GET("/data", controllers.CustomerController.GetCustomer)
+	}
+
+	order := v1.Group("/order")
+	order.Use(middleware.AuthorizeBaererJWT(), middleware.AuthHeader())
+	{
+		order.GET("/data", controllers.OrderController.GetOrder)
+		order.POST("/", controllers.OrderController.InsertUpdateOrders)
+		order.PUT("/", controllers.OrderController.InsertUpdateOrders)
+		order.DELETE("/", controllers.OrderController.DeleteOrder)
 	}
 
 }

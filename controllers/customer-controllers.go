@@ -15,6 +15,7 @@ type customerController struct {
 var CustomerController = customerController{}
 
 func (controller customerController) InsertUpdateCustomer(c *gin.Context) {
+
 	var input raw.JSONRequestRegisterCustomer
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
@@ -23,7 +24,7 @@ func (controller customerController) InsertUpdateCustomer(c *gin.Context) {
 		return
 	}
 
-	result, err := repositories.UserRepositories.RegisterCustomer(input, c)
+	result, err := repositories.UserRepositories.InsertUpdateCustomer(input, c)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"errorMessage": err.Error(),
@@ -72,7 +73,7 @@ func (controller customerController) GetCustomer(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, result)
+	c.JSON(http.StatusOK, result)
 	return
 }
 

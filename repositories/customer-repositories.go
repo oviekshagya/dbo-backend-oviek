@@ -55,7 +55,12 @@ func (service userRepositories) GetCustomer(c *gin.Context) (interface{}, error)
 		return d
 	}).Find(&data)
 
-	db.Table("customer").Count(&count)
+	db.Table("customer").Scopes(scopes.Paginate(pageSize, page)).Scopes(func(d *gorm.DB) *gorm.DB {
+		if search != "" {
+			return d.Where("nama_customer LIKE ?", fmt.Sprintf("%%%s%%", search))
+		}
+		return d
+	}).Count(&count)
 
 	if int(count) < pageSize {
 		totalPage = 1
@@ -79,7 +84,7 @@ func (service userRepositories) GetCustomer(c *gin.Context) (interface{}, error)
 	}, nil
 }
 
-func (service userRepositories) RegisterCustomer(input raw.JSONRequestRegisterCustomer, c *gin.Context) (*models.Customer, error) {
+func (service userRepositories) InsertUpdateCustomer(input raw.JSONRequestRegisterCustomer, c *gin.Context) (*models.Customer, error) {
 	db := c.MustGet("db").(*gorm.DB)
 	trx := db.Begin()
 
