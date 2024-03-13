@@ -1,0 +1,423 @@
+{
+	"info": {
+		"_postman_id": "19b301d0-92e2-4d8b-9cb1-e65dd70bc231",
+		"name": "DBO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33591058"
+	},
+	"item": [
+		{
+			"name": "Welcome",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8070/",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrasi Customer",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "dbopassword",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "dbouser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "DBOACCESS",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nama_customer\":\"Customer 2\",\r\n    \"password\":\"Customer2\",\r\n    \"email\":\"customer2@mail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8070/v1/customer/",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"v1",
+						"customer",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Customer",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "dbopassword",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "dbouser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "DBOACCESS",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_customer\":2,\r\n    \"nama_customer\":\"Customer 3\",\r\n    \"password\":\"Customer3\",\r\n    \"email\":\"customer3@mail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8070/v1/customer/",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"v1",
+						"customer",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Customer",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "dbopassword",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "dbouser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "DBOACCESS",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_customer\":2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8070/v1/customer/",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"v1",
+						"customer",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6IjU1ZjM1YWI4LTU2M2UtNGM1Yy05ZTI5LWFhNGZmZDNhZTVmMCIsImV4cCI6MTcxMDUyNDg0MiwidXNlcl9pZCI6IjIifQ.i8_AngZZ843Qj2L6n5vt-V-jk2KcGMDKKhaMNBVoCYE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "DBOACCESS",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8070/v1/customer/auth/data?page=1&page_size&idCustomer=",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"v1",
+						"customer",
+						"auth",
+						"data"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "page_size",
+							"value": null
+						},
+						{
+							"key": "idCustomer",
+							"value": ""
+						},
+						{
+							"key": "search",
+							"value": "customer 1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6IjU1ZjM1YWI4LTU2M2UtNGM1Yy05ZTI5LWFhNGZmZDNhZTVmMCIsImV4cCI6MTcxMDUyNDg0MiwidXNlcl9pZCI6IjIifQ.i8_AngZZ843Qj2L6n5vt-V-jk2KcGMDKKhaMNBVoCYE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "DBOACCESS",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_customer\":1,\r\n    \"produk\":\"PARALON 5M\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8070/v1/order/",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"v1",
+						"order",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6IjU1ZjM1YWI4LTU2M2UtNGM1Yy05ZTI5LWFhNGZmZDNhZTVmMCIsImV4cCI6MTcxMDUyNDg0MiwidXNlcl9pZCI6IjIifQ.i8_AngZZ843Qj2L6n5vt-V-jk2KcGMDKKhaMNBVoCYE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "DBOACCESS",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_order\":4,\r\n    \"id_customer\":3,\r\n    \"produk\":\"ASBES\",\r\n    \"status_order\":\"reject\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8070/v1/order/",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"v1",
+						"order",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6IjU1ZjM1YWI4LTU2M2UtNGM1Yy05ZTI5LWFhNGZmZDNhZTVmMCIsImV4cCI6MTcxMDUyNDg0MiwidXNlcl9pZCI6IjIifQ.i8_AngZZ843Qj2L6n5vt-V-jk2KcGMDKKhaMNBVoCYE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "DBOACCESS",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_order\":4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8070/v1/order/",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"v1",
+						"order",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6IjU1ZjM1YWI4LTU2M2UtNGM1Yy05ZTI5LWFhNGZmZDNhZTVmMCIsImV4cCI6MTcxMDUyNDg0MiwidXNlcl9pZCI6IjIifQ.i8_AngZZ843Qj2L6n5vt-V-jk2KcGMDKKhaMNBVoCYE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "DBOACCESS",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8070/v1/order/data?page=1&page_size&idCustomer=&idOrder=4",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"v1",
+						"order",
+						"data"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "page_size",
+							"value": null
+						},
+						{
+							"key": "idCustomer",
+							"value": ""
+						},
+						{
+							"key": "idOrder",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
