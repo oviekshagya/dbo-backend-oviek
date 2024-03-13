@@ -46,3 +46,16 @@ func (controller customerController) RegisterCustomer(c *gin.Context) {
 	})
 	return
 }
+
+func (controller customerController) GetCustomer(c *gin.Context) {
+	result, err := repositories.UserRepositories.GetCustomer(c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"errorMessage": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusCreated, result)
+	return
+}

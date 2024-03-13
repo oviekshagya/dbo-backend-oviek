@@ -13,3 +13,14 @@ type Customer struct {
 func (Customer) TableName() string {
 	return "customer"
 }
+
+type DataCustomer struct {
+	IdCustomer    int       `gorm:"column:id_customer;primaryKey" json:"id_customer"`
+	NamaCustomer  string    `gorm:"column:nama_customer;type:varchar(100)" json:"nama_customer"`
+	Email         string    `gorm:"column:email;type:varchar(100)" json:"email"`
+	TglRegistrasi time.Time `gorm:"column:tgl_registrasi;type:datetime" json:"tgl_registrasi"`
+}
+
+func (DataCustomer) TableName() string {
+	return "customer"
+}

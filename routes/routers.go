@@ -8,6 +8,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/requestid"
 	"github.com/gin-gonic/gin"
+
 )
 
 var (
@@ -34,6 +35,7 @@ func Setup() {
 	customer.Use(middleware.AuthBasic(), middleware.AuthHeader())
 	{
 		customer.POST("/registrasi", controllers.CustomerController.RegisterCustomer)
+		customer.GET("/", controllers.CustomerController.GetCustomer)
 	}
 
 }
