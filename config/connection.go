@@ -1,6 +1,7 @@
 package config
 
 import (
+	"dbo-backend-oviek/models"
 	"fmt"
 	"log"
 
@@ -25,5 +26,7 @@ func SetupMainDBGORM() *grm.DB {
 	if err != nil {
 		log.Println("err connect db main:", err)
 	}
+	db.AutoMigrate(&models.Customer{})
+	db.AutoMigrate(&models.Order{})
 	return db
 }
