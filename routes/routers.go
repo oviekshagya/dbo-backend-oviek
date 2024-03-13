@@ -8,6 +8,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/requestid"
 	"github.com/gin-gonic/gin"
+
 )
 
 var (
@@ -36,6 +37,7 @@ func Setup() {
 		customer.POST("/", controllers.CustomerController.InsertUpdateCustomer)
 		customer.PUT("/", controllers.CustomerController.InsertUpdateCustomer)
 		customer.DELETE("/", controllers.CustomerController.DeleteCustomer)
+		customer.POST("/login", controllers.CustomerController.Login)
 	}
 	customerAuth := v1.Group("/customer/auth")
 	customerAuth.Use(middleware.AuthorizeBaererJWT(), middleware.AuthHeader())

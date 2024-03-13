@@ -147,3 +147,20 @@ func (service userRepositories) DeleteCustomer(input raw.JSONRequestRegisterCust
 		"data": data,
 	}, nil
 }
+
+func (service userRepositories) Login(input raw.JSONRequestLogin, c *gin.Context) (*models.Customer, error) {
+	db := c.MustGet("db").(*gorm.DB)
+	var data models.Customer
+	db.Where("email = ?", input.Email).Take(&data)
+	if data.Email != "" {
+		hash := []byte(data.Password)
+		err := bcrypt.CompareHashAndPassword(hash, []byte(input.Password))
+		if err != nil {
+			return nil, fmt.Errorf("email / password salah")
+		}
+		return &data, nil
+
+	}
+
+	return nil, fmt.Errorf("email / password salah")
+}

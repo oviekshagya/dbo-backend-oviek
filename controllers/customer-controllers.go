@@ -96,3 +96,36 @@ func (controller customerController) DeleteCustomer(c *gin.Context) {
 	c.JSON(http.StatusCreated, result)
 	return
 }
+
+func (controller customerController) Login(c *gin.Context) {
+	var input raw.JSONRequestLogin
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"errorMessage": err.Error(),
+		})
+		return
+	}
+
+	result, err := repositories.UserRepositories.Login(input, c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"errorMessage": err.Error(),
+		})
+		return
+	}
+
+	createdToken, errToken := pkg.CreateToken(result.IdCustomer)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"errorMessage": errToken.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusCreated, map[string]interface{}{
+		"message":      "success",
+		"accessToken":  createdToken.AccessToken,
+		"refreshToken": createdToken.RefreshToken,
+	})
+	return
+}

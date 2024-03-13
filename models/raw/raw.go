@@ -6,3 +6,8 @@ type JSONRequestRegisterCustomer struct {
 	Password     string `gorm:"column:password;type:varchar(100)" json:"password"`
 	Email        string `gorm:"column:email;type:varchar(100)" json:"email"`
 }
+
+type JSONRequestLogin struct {
+	Password string `gorm:"column:password;type:varchar(100)" json:"password"`
+	Email    string `gorm:"column:email;type:varchar(100)" json:"email"`
+}
