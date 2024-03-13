@@ -1,0 +1,25 @@
+version: "2.2"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dbobackendoviek
+    volumes:
+      - .:/go/src/dbo-backend-oviek
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    working_dir: /go/src/dbo-backend-oviek
+    command: go run main.go
+    ports:
+      - "8070:8070" # http
+    expose:
+      - "8070"
+    environment:
+      TZ: Asia/Jakarta
+      VIRTUAL_HOST: https://docker-dev.oviek.co.id/dbo-backend-oviek
+    network_mode: host
+    restart: always
+networks:
+  default:
