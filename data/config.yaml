@@ -1,0 +1,17 @@
+server:
+  AppName: "dbo-backend-oviek"
+  Port: "8070"
+  Secret: "12sfs2fsd4ghf"
+  Mode: "release"
+  Env: "dev"
+
+Database:
+  Driver: "mysql"
+  Dbname: "dbo_backend"
+  Username: "root"
+  Password: ""
+  Host: "localhost"
+  Port: "3306"
+  MaxLifetime: 50
+  MaxOpenConns: 1000
+  MaxIdleConns: 1200
