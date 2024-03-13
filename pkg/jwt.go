@@ -10,6 +10,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/twinj/uuid"
+
 )
 
 type Claims struct {
@@ -86,7 +87,7 @@ func verifyToken(r *http.Request) (*jwt.Token, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte("SECRETJWT"), nil
+		return []byte(""), nil
 	})
 	if err != nil {
 		return nil, err

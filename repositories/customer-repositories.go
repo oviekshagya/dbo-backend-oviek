@@ -75,6 +75,7 @@ func (service userRepositories) GetCustomer(c *gin.Context) (interface{}, error)
 func (service userRepositories) RegisterCustomer(input raw.JSONRequestRegisterCustomer, c *gin.Context) (*models.Customer, error) {
 	db := c.MustGet("db").(*gorm.DB)
 	trx := db.Begin()
+
 	hash, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 	if err != nil {
 		trx.Rollback()
@@ -89,6 +90,25 @@ func (service userRepositories) RegisterCustomer(input raw.JSONRequestRegisterCu
 		TglRegistrasi: time.Now(),
 	}
 
+	if input.IdCustomer != 0 {
+		hashUpdate, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
+		if err != nil {
+			trx.Rollback()
+			return nil, fmt.Errorf("password tidak bisa di generate")
+		}
+
+		if updated := trx.Table("customer").Where("id_customer = ?", input.IdCustomer).Updates(map[string]interface{}{
+			"nama_customer": input.NamaCustomer,
+			"password":      string(hashUpdate),
+			"email":         input.Email,
+		}); updated.Error != nil {
+			trx.Rollback()
+			return nil, fmt.Errorf("update tidak bisa dilakukan")
+		}
+		trx.Commit()
+		return &dataCrated, nil
+	}
+
 	if created := trx.Create(&dataCrated); created.Error != nil {
 		trx.Rollback()
 		return nil, fmt.Errorf("rollback created")
@@ -96,4 +116,22 @@ func (service userRepositories) RegisterCustomer(input raw.JSONRequestRegisterCu
 
 	trx.Commit()
 	return &dataCrated, nil
+}
+
+func (service userRepositories) DeleteCustomer(input raw.JSONRequestRegisterCustomer, c *gin.Context) (interface{}, error) {
+	db := c.MustGet("db").(*gorm.DB)
+	trx := db.Begin()
+
+	var data models.Customer
+	trx.Where("id_customer = ?", input.IdCustomer).Take(&data)
+
+	if created := trx.Delete(&data); created.Error != nil {
+		trx.Rollback()
+		return nil, fmt.Errorf("rollback deleted")
+	}
+
+	trx.Commit()
+	return map[string]interface{}{
+		"data": data,
+	}, nil
 }

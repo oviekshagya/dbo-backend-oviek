@@ -34,8 +34,14 @@ func Setup() {
 	customer := v1.Group("/customer")
 	customer.Use(middleware.AuthBasic(), middleware.AuthHeader())
 	{
-		customer.POST("/registrasi", controllers.CustomerController.RegisterCustomer)
-		customer.GET("/", controllers.CustomerController.GetCustomer)
+		customer.POST("/", controllers.CustomerController.InsertUpdateCustomer)
+		customer.PUT("/", controllers.CustomerController.InsertUpdateCustomer)
+		customer.DELETE("/", controllers.CustomerController.DeleteCustomer)
+	}
+	customerAuth := v1.Group("/customer/auth")
+	customerAuth.Use(middleware.AuthorizeBaererJWT(), middleware.AuthHeader())
+	{
+		customerAuth.GET("/data", controllers.CustomerController.GetCustomer)
 	}
 
 }
