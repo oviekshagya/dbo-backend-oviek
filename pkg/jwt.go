@@ -12,6 +12,11 @@ import (
 	"github.com/twinj/uuid"
 )
 
+type Claims struct {
+	UserId int
+	jwt.StandardClaims
+}
+
 type TokenDetails struct {
 	AccessToken  string
 	RefreshToken string
@@ -42,7 +47,7 @@ func CreateToken(userId int) (*TokenDetails, error) {
 	atClaims["user_id"] = strconv.Itoa(userId)
 	atClaims["exp"] = td.AtExpires
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
-	td.AccessToken, err = at.SignedString([]byte("SECRETJWT"))
+	td.AccessToken, err = at.SignedString([]byte(""))
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +62,7 @@ func CreateToken(userId int) (*TokenDetails, error) {
 	rtClaims["exp"] = td.RtExpires
 	rt := jwt.NewWithClaims(jwt.SigningMethodHS256, rtClaims)
 
-	td.RefreshToken, err = rt.SignedString([]byte("SECRETREFRESTJWT"))
+	td.RefreshToken, err = rt.SignedString([]byte(""))
 	if err != nil {
 		return nil, err
 	}
@@ -122,4 +127,29 @@ func ExtractToken(r *http.Request) (*AccessDetails, error) {
 	}
 
 	return acc, nil
+}
+
+var jwtSecret []byte
+
+func ParseToken(token string) (*Claims, error) {
+	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return jwtSecret, nil
+	})
+
+	if tokenClaims != nil {
+		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {
+			return claims, nil
+		}
+	}
+
+	return nil, err
+}
+
+func ExtractTokenMiddleware(r *http.Request) string {
+	bearToken := r.Header.Get("Authorization")
+	strArr := strings.Split(bearToken, " ")
+	if len(strArr) == 2 {
+		return strArr[1]
+	}
+	return ""
 }
