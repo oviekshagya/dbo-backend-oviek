@@ -23,6 +23,7 @@ func (service userRepositories) GetCustomer(c *gin.Context) (interface{}, error)
 	page, _ := strconv.Atoi(c.Query("page"))
 	pageSize, _ := strconv.Atoi(c.Query("page_size"))
 	idCustomer, _ := strconv.Atoi(c.Query("idCustomer"))
+	search := c.Query("search")
 
 	var data []models.DataCustomer
 
@@ -47,7 +48,13 @@ func (service userRepositories) GetCustomer(c *gin.Context) (interface{}, error)
 		pageSize = 10
 	}
 
-	db.Scopes(scopes.Paginate(pageSize, page)).Find(&data)
+	db.Scopes(scopes.Paginate(pageSize, page)).Scopes(func(d *gorm.DB) *gorm.DB {
+		if search != "" {
+			return d.Where("nama_customer LIKE ?", fmt.Sprintf("%%%s%%", search))
+		}
+		return d
+	}).Find(&data)
+
 	db.Table("customer").Count(&count)
 
 	if int(count) < pageSize {
